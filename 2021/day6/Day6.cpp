@@ -31,7 +31,7 @@ void SimulateLanternFish(const vector<int> & initialState)
 {
   vector<int> lanternFishGroup = initialState;
 
-  for (int i = 0; i < 80; i++)
+  for (int i = 0; i < 256; i++)
   {
     int newfish = 0;
 
