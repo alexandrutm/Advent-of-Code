@@ -1,73 +1,71 @@
+#include <algorithm>
+#include <array>
+#include <cstdint>
 #include <fstream>
 #include <iostream>
-#include <regex>
+#include <numeric>
+#include <queue>
 #include <sstream>
-#include <string>
-#include <vector>
 
 using namespace std;
 
-#define NEWLANTERNFISH 8
-#define NEWLIFE        6
+using Population = deque<uint64_t>;
 
-void ParseStringToVectorInt(const string & str, vector<int> & result)
+void init_population(Population & pop, const vector<uint64_t> & initialPopulation)
 {
-  typedef regex_iterator<std::string::const_iterator> re_iterator;
-  typedef re_iterator::value_type                     re_iterated;
+  pop.resize(9);
+  fill(pop.begin(), pop.end(), 0);
 
-  regex re("(\\d+)");
-
-  re_iterator rit(str.begin(), str.end(), re);
-  re_iterator rend;
-
-  transform(rit, rend, std::back_inserter(result),
-            [](const re_iterated & it)
-            {
-              return std::stoi(it[1]);
-            });
-}
-
-void SimulateLanternFish(const vector<int> & initialState)
-{
-  vector<int> lanternFishGroup = initialState;
-
-  for (int i = 0; i < 256; i++)
+  for (auto fish : initialPopulation)
   {
-    int newfish = 0;
-
-    for (int j = 0; j < lanternFishGroup.size(); j++)
-    {
-      if (lanternFishGroup[j] == 0)
-      {
-        newfish++;
-        lanternFishGroup[j] = NEWLIFE;
-      }
-      else
-        lanternFishGroup[j] -= 1;
-    }
-
-    for (int j = 0; j < newfish; j++)
-    {
-      lanternFishGroup.push_back(NEWLANTERNFISH);
-    }
+    pop[fish]++;
   }
-
-  cout << "Part1 " << lanternFishGroup.size();
 }
 
-void SolutionDay6()
+uint64_t total_pop_count(Population & population)
 {
-  vector<int> lanternFishGroup;
+  return accumulate(population.begin(), population.end(), UINT64_C(0), plus<uint64_t>());
+}
 
-  ifstream fin("inputday6.txt");
-  string   str;
-
-  fin >> str;
-  ParseStringToVectorInt(str, lanternFishGroup);
-  SimulateLanternFish(lanternFishGroup);
+void simulate_day(Population & population)
+{
+  uint64_t reproducing = population.front();
+  population.pop_front();
+  population.push_back(0);
+  population[6] += reproducing;
+  population[8] = reproducing;
 }
 
 int main()
 {
-  SolutionDay6();
+  ifstream         input("input.txt");
+  vector<uint64_t> initialPopulation;
+
+  int n = 0;
+  while (input >> n)
+  {
+    initialPopulation.push_back(n);
+    input.ignore();
+  }
+
+  constexpr const uint32_t daysPart1 = 80;
+  {
+    Population pop;
+    init_population(pop, initialPopulation);
+
+    for (uint32_t i = 0; i < daysPart1; i++)
+      simulate_day(pop);
+    cout << "Simulated population size of lanternfish after " << daysPart1 << " is "
+         << total_pop_count(pop) << "\n";
+  }
+
+  constexpr const uint32_t daysPart2 = 256;
+  {
+    Population pop;
+    init_population(pop, initialPopulation);
+    for (uint32_t i = 0; i < daysPart2; i++)
+      simulate_day(pop);
+    cout << "Simulated population size of lanternfish after " << daysPart2 << " is "
+         << total_pop_count(pop) << "\n";
+  }
 }

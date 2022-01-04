@@ -5,3 +5,7 @@ Debug/
 Release/
 Win32/
 x64/
+*.sln
+*.vcxproj
+*.vcxproj.filters
+*.txt
