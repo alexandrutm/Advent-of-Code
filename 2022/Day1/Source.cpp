@@ -1,9 +1,9 @@
+#include <algorithm>
 #include <fstream>
 #include <iostream>
-#include <vector>
-#include <string>
-#include <algorithm>
 #include <numeric>
+#include <string>
+#include <vector>
 
 using namespace std;
 
@@ -13,9 +13,8 @@ int main()
 
   string currentcarry;
   int    currCarry = 0;
-  int    mostCarry = 0;
 
-  vector<int> allCarry;
+  vector<int> elfsLoad;
 
   while (!fin.eof())
   {
@@ -23,10 +22,7 @@ int main()
 
     if (currentcarry == "")
     {
-      if (currCarry > mostCarry)
-        mostCarry = currCarry;
-
-      allCarry.push_back(currCarry);
+      elfsLoad.push_back(currCarry);
       currCarry = 0;
       continue;
     }
@@ -34,12 +30,12 @@ int main()
     currCarry += stoi(currentcarry);
   }
 
-  cout << mostCarry;
+  cout << "Highest calories " << *(max_element(elfsLoad.begin(), elfsLoad.end()));
 
-  sort(allCarry.begin(), allCarry.end(), greater<int>());
+  sort(elfsLoad.begin(), elfsLoad.end(), greater<int>());
 
   cout << "\n Total of most 3 carriers "
-       << std::accumulate(allCarry.begin(), allCarry.begin() + 3, 0);
+       << std::accumulate(elfsLoad.begin(), elfsLoad.begin() + 3, 0);
 
   return 0;
 }
