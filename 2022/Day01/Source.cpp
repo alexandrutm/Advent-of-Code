@@ -11,23 +11,23 @@ int main()
 {
   ifstream fin("day1.txt");
 
-  string currentcarry;
-  int    currCarry = 0;
+  string currentCalories;
+  int    totalCaloriesElf = 0;
 
   vector<int> elfsLoad;
 
   while (!fin.eof())
   {
-    getline(fin, currentcarry);
+    getline(fin, currentCalories);
 
-    if (currentcarry == "")
+    if (currentCalories == "")
     {
-      elfsLoad.push_back(currCarry);
-      currCarry = 0;
+      elfsLoad.push_back(totalCaloriesElf);
+      totalCaloriesElf = 0;
       continue;
     }
 
-    currCarry += stoi(currentcarry);
+    totalCaloriesElf += stoi(currentCalories);
   }
 
   cout << "Highest calories " << *(max_element(elfsLoad.begin(), elfsLoad.end()));
