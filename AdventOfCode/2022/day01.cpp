@@ -1,11 +1,4 @@
-#include <algorithm>
-#include <fstream>
-#include <iostream>
-#include <numeric>
-#include <string>
-#include <vector>
-
-using namespace std;
+#include "../includes.h"
 
 int main()
 {
