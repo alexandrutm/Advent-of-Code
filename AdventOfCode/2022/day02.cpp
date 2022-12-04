@@ -16,13 +16,13 @@ constexpr wchar_t ROCKENCODE     = 'X';  // second half lose
 constexpr wchar_t PAPERENCODE    = 'Y';  // second half draw
 constexpr wchar_t SCISSORSENCODE = 'Z';  // second half win
 
-int main()
+void day2()
 {
   wifstream fin("data.txt");
   wstring   line;
 
-  vector<ll> dataFirstHalf;
-  vector<ll> dataSecondHalf;
+  vector<ull> dataFirstHalf;
+  vector<ull> dataSecondHalf;
 
   while (!fin.eof())
   {
@@ -95,6 +95,4 @@ int main()
 
   cout << "First half: " << accumulate(dataFirstHalf.begin(), dataFirstHalf.end(), 0);
   cout << "\nSecond half: " << accumulate(dataSecondHalf.begin(), dataSecondHalf.end(), 0);
-
-  return 0;
 }

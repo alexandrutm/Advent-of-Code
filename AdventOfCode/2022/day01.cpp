@@ -1,6 +1,6 @@
 #include "../includes.h"
 
-int main()
+void day1()
 {
   ifstream fin("day1.txt");
 
@@ -29,6 +29,4 @@ int main()
 
   cout << "\n Total of most 3 carriers "
        << std::accumulate(elfsLoad.begin(), elfsLoad.begin() + 3, 0);
-
-  return 0;
 }
