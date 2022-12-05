@@ -6,24 +6,22 @@ void day5()
 
   string line;
 
-  vector<string> data;
+  vector<string> initialCratesState{ { "RNPG" },  { "TJBLCSVH" }, { "TDBMNL" },
+                                     { "RVPSB" }, { "GCQSWMVH" }, { "WQSCDBJ" },
+                                     { "FQL" },   { "WMHTDLFV" }, { "LPBVMJF" } };
 
-  vector<string> numbers{ { "RNPG" },  { "TJBLCSVH" }, { "TDBMNL" },
-                          { "RVPSB" }, { "GCQSWMVH" }, { "WQSCDBJ" },
-                          { "FQL" },   { "WMHTDLFV" }, { "LPBVMJF" } };
+  vector<stack<char>> cratesStacksP1;
+  vector<stack<char>> cratesStacksP2;
 
-  vector<stack<char>> data2;
-
-  for (auto line : numbers)
+  for (auto line : initialCratesState)
   {
-    stack<char> a;
+    stack<char> stk;
 
     for (auto i : line)
-      a.push(i);
+      stk.push(i);
 
-    data2.push_back(a);
-
-    a = stack<char>();
+    cratesStacksP1.push_back(stk);
+    cratesStacksP2.push_back(stk);
   }
 
   while (!fin.eof())
@@ -32,37 +30,40 @@ void day5()
 
     vector<int> instructions;
 
-    GetAllIntsFromStringLine(line, instructions);
+    ExtractSignedInts(line, instructions);
 
-    stack<int> intermed;
+    // p1
+    for (int i = 0; i < instructions[0]; i++)
+    {
+      cratesStacksP1[instructions[2] - 1].push(cratesStacksP1[instructions[1] - 1].top());
+      cratesStacksP1[instructions[1] - 1].pop();
+    }
+
+    // p2
+    stack<int> intermediarStk;
 
     for (int i = 0; i < instructions[0]; i++)
     {
-      intermed.push(data2[instructions[1] - 1].top());
-      data2[instructions[1] - 1].pop();
+      intermediarStk.push(cratesStacksP2[instructions[1] - 1].top());
+      cratesStacksP2[instructions[1] - 1].pop();
     }
 
     for (int i = 0; i < instructions[0]; i++)
     {
-      data2[instructions[2] - 1].push(intermed.top());
-      intermed.pop();
+      cratesStacksP2[instructions[2] - 1].push(intermediarStk.top());
+      intermediarStk.pop();
     }
-
-    // for (int i = 0; i < instructions[0]; i++)
-    //{
-    //   data2[instructions[2] - 1].push(data2[instructions[1] - 1].top());
-    //   data2[instructions[1] - 1].pop();
-    // }
   }
 
-  for (auto st : data2)
+  cout << "Part 1:  ";
+  for (auto st : cratesStacksP1)
   {
     cout << st.top();
   }
-}
 
-int main()
-{
-  day5();
-  return 0;
+  cout << "\nPart 2:  ";
+  for (auto st : cratesStacksP2)
+  {
+    cout << st.top();
+  }
 }

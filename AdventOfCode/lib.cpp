@@ -1,12 +1,13 @@
 #include "stdafx.h"
 #include "lib.h"
 
-void GetAllIntsFromStringLine(string str, vector<int> & aNumbers)
+void ExtractSignedInts(const string & aStr, vector<int> & aNumbers)
 {
   stringstream ss;
-  ss << str;
+  ss << aStr;
   string temp;
-  int    found;
+
+  int found;
   while (!ss.eof())
   {
     ss >> temp;

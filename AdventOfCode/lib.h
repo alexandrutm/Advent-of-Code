@@ -1,4 +1,4 @@
 #pragma once
 #include "stdafx.h"
 
-void GetAllIntsFromStringLine(string str, vector<int> & aNumbers);
+void ExtractSignedInts(const string & aStr, vector<int> & aNumbers);
