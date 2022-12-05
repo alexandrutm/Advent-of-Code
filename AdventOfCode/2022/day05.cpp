@@ -1,24 +1,12 @@
-#include "../includes.h"
-
-/*
-    [H]         [H]         [V]
-    [V]         [V] [J]     [F] [F]
-    [S] [L]     [M] [B]     [L] [J]
-    [C] [N] [B] [W] [D]     [D] [M]
-[G] [L] [M] [S] [S] [C]     [T] [V]
-[P] [B] [B] [P] [Q] [S] [L] [H] [B]
-[N] [J] [D] [V] [C] [Q] [Q] [M] [P]
-[R] [T] [T] [R] [G] [W] [F] [W] [L]
- 1   2   3   4   5   6   7   8   9
- */
+#include "../lib.h"
 
 void day5()
 {
-  wifstream fin("data.txt");
+  ifstream fin("data.txt");
 
-  wstring line;
+  string line;
 
-  vector<wstring> data;
+  vector<string> data;
 
   vector<string> numbers{ { "RNPG" },  { "TJBLCSVH" }, { "TDBMNL" },
                           { "RVPSB" }, { "GCQSWMVH" }, { "WQSCDBJ" },
@@ -44,26 +32,7 @@ void day5()
 
     vector<int> instructions;
 
-    wstringstream ss;
-
-    /* Storing the whole string into string stream */
-    ss << line;
-
-    /* Running loop till the end of the stream */
-    wstring temp;
-    int     found;
-    while (!ss.eof())
-    {
-      /* extracting word by word from stream */
-      ss >> temp;
-
-      /* Checking the given word is integer or not */
-      if (wstringstream(temp) >> found)
-        instructions.push_back(found);
-
-      /* To save from space at the end of string */
-      temp = L"";
-    }
+    GetAllIntsFromStringLine(line, instructions);
 
     stack<int> intermed;
 

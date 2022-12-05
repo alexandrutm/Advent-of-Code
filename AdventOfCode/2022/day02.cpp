@@ -1,4 +1,4 @@
-#include "../includes.h"
+#include "../stdafx.h"
 
 constexpr int ROCKVAL     = 1;
 constexpr int PAPERVAL    = 2;
