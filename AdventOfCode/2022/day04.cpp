@@ -1,6 +1,6 @@
 #include "../includes.h"
 
-void main()
+void day4()
 {
   wifstream fin("data.txt");
 
