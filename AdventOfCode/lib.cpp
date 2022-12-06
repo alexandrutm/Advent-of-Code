@@ -18,3 +18,19 @@ void ExtractSignedInts(const string & aStr, vector<int> & aNumbers)
     temp = "";
   }
 }
+
+bool UniqueCharacters(const string & str)
+{
+  for (int i = 0; i < str.length() - 1; i++)
+  {
+    for (int j = i + 1; j < str.length(); j++)
+    {
+      if (str[i] == str[j])
+      {
+        return false;
+      }
+    }
+  }
+
+  return true;
+}
