@@ -29,8 +29,3 @@ void day06()
     }
   }
 }
-
-void main()
-{
-  day06();
-}

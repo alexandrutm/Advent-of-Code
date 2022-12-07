@@ -28,8 +28,3 @@ void day1()
   cout << "First half: " << sumP1;
   cout << "\nSecond half: " << sumP2;
 }
-
-void main()
-{
-  day1();
-}

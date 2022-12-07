@@ -9,7 +9,11 @@ ull MaxSize        = 100000;
 ull AvailableSpace = 70000000;
 ull UnusedSpace    = 30000000;
 
-vector<ull> dirSizes;
+// NecessaySpace-(AvailableSpace-rootSize)
+ull MustFree = 10216456;
+
+vector<ull> dirSizes1;
+vector<ull> dirSizes2;
 
 struct Node
 {
@@ -64,7 +68,10 @@ int DFS(Node * root)
     }
 
   if (root->size < MaxSize)
-    dirSizes.push_back(root->size);
+    dirSizes1.push_back(root->size);
+
+  if (root->size > MustFree)
+    dirSizes2.push_back(root->size);
 
   return root->size;
 }
@@ -119,8 +126,9 @@ void day07()
   }
 
   DFS(root);
+  cout << "First Half: " << accumulate(dirSizes1.begin(), dirSizes1.end(), 0);
 
-  cout << accumulate(dirSizes.begin(), dirSizes.end(), 0);
+  cout << "Second half: " << *min_element(dirSizes2.begin(), dirSizes2.end());
 }
 
 void main()
