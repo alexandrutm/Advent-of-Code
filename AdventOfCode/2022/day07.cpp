@@ -9,7 +9,7 @@ ull MaxSize        = 100000;
 ull AvailableSpace = 70000000;
 ull UnusedSpace    = 30000000;
 
-// NecessaySpace-(AvailableSpace-rootSize)
+// UnusedSpace-(AvailableSpace-rootSize)
 ull MustFree = 10216456;
 
 vector<ull> dirSizes1;
@@ -129,9 +129,4 @@ void day07()
   cout << "First Half: " << accumulate(dirSizes1.begin(), dirSizes1.end(), 0);
 
   cout << "Second half: " << *min_element(dirSizes2.begin(), dirSizes2.end());
-}
-
-void main()
-{
-  day07();
 }
