@@ -1,6 +1,19 @@
 #include "stdafx.h"
 #include "lib.h"
 
+ll CMMDC(ll aFirst, ll aSecond)
+{
+  if (aFirst == 0)
+    return aSecond;
+
+  return CMMDC(aSecond % aFirst, aFirst);
+}
+
+ll CMMMC(ll aFirst, ll aSecond)
+{
+  return (aFirst * aSecond) / CMMDC(aFirst, aSecond);
+}
+
 void ExtractSignedInts(const string & aStr, vector<int> & aNumbers)
 {
   stringstream ss;
