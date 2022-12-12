@@ -131,8 +131,3 @@ void day11()
 
   cout << inspections[0] * inspections[1];
 }
-
-void main()
-{
-  day11();
-}
