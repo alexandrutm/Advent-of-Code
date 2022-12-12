@@ -8,6 +8,7 @@
 #include <memory>
 #include <numeric>
 #include <optional>
+#include <queue>
 #include <set>
 #include <sstream>
 #include <stack>
@@ -21,3 +22,5 @@ using namespace std;
 
 using ull = unsigned long long;
 using ll  = long long;
+
+#define F0R(i, size) for (int i = 0; i < size; i++)
