@@ -1,4 +1,4 @@
-#include "lib.h"
+#include "../lib.h"
 
 void ComputeString(string & output, int spritepos, int currentCol)
 {
