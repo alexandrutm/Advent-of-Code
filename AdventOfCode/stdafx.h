@@ -9,6 +9,7 @@
 #include <numeric>
 #include <optional>
 #include <queue>
+#include <regex>
 #include <set>
 #include <sstream>
 #include <stack>
