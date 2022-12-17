@@ -1,23 +1,4 @@
-#include <algorithm>
-#include <array>
-#include <fstream>
-#include <iostream>
-#include <map>
-#include <memory>
-#include <numeric>
-#include <optional>
-#include <queue>
-#include <regex>
-#include <set>
-#include <sstream>
-#include <stack>
-#include <string>
-#include <string_view>
-#include <unordered_map>
-#include <variant>
-#include <vector>
-
-using namespace std;
+#include "../lib.h"
 
 struct point
 {

@@ -1,6 +1,7 @@
 #pragma once
 
 #include <algorithm>
+#include <charconv>
 #include <cmath>
 #include <fstream>
 #include <iostream>
@@ -17,6 +18,7 @@
 #include <string>
 #include <unordered_map>
 #include <unordered_set>
+#include <variant>
 #include <vector>
 
 using namespace std;
