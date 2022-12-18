@@ -39,7 +39,7 @@ void ExtractSignedlong(string s, vector<point> & aNumbers)
   }
 }
 
-void main()
+void day15()
 {
   ifstream fin("data.txt");
 
