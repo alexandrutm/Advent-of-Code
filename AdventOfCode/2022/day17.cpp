@@ -111,15 +111,69 @@ int GetCaveTop(vector<vector<char>> & aCave)
   return max;
 }
 
+vector<vector<char>> GetLastState(vector<vector<char>> & aCave)
+{
+  vector<vector<char>> cave;
+
+  int height = GetCaveTop(aCave);
+
+  if (height < 40)
+    return { {} };
+
+  // get last 40 rows from cave
+  int rIndex = 0;
+  for (auto row : aCave)
+  {
+    if (rIndex < height - 40)
+    {
+      rIndex++;
+      continue;
+    }
+
+    cave.push_back(row);
+
+    if (rIndex == height - 1)
+      return cave;
+
+    rIndex++;
+  }
+
+  return { {} };
+}
+
+struct caveView
+{
+  int instructionIndex, pieceIndex, currentTop, droppedPieces;
+
+  vector<vector<char>> view;
+
+  bool operator==(const caveView & r)
+  {
+    if (instructionIndex != r.instructionIndex || pieceIndex != r.pieceIndex)
+      return false;
+
+    for (int i = 0; i < view.size(); i++)
+    {
+      for (int j = 0; j < view[i].size(); j++)
+      {
+        if (view[i][j] != r.view[i][j])
+          return false;
+      }
+    }
+
+    return true;
+  }
+};
+
 void main()
 {
   ifstream fin("data.txt");
-  string   directions;
-  getline(fin, directions);
+  string   instructions;
+  getline(fin, instructions);
 
-  int sky            = 0;
-  int pieceIndex     = 0;
-  int directionIndex = 0;
+  int top              = 0;
+  int pieceIndex       = 0;
+  int instructionIndex = 0;
 
   vector<vector<char>> cave(100000, vector<char>(7, '.'));
   fill(cave[0].begin(), cave[0].end(), '#');
@@ -128,12 +182,14 @@ void main()
 
   long long maxPiece = 1000000000000;
 
-  while (1)
+  vector<caveView> states;
+
+  while (droppedPieces < maxPiece)
   {
-    auto currentPiece = GetPiece(pieceIndex % 5, sky + 4);
+    auto currentPiece = GetPiece(pieceIndex % 5, top + 4);
     while (1)
     {
-      if (directions[directionIndex] == '<')
+      if (instructions[instructionIndex] == '<')
       {
         MoveLeft(currentPiece);
         if (CheckCave(cave, currentPiece))
@@ -147,7 +203,7 @@ void main()
       }
 
       // circular directions
-      directionIndex = (directionIndex + 1) % directions.size();
+      instructionIndex = (instructionIndex + 1) % instructions.size();
 
       MoveDown(currentPiece);
       if (CheckCave(cave, currentPiece))
@@ -155,8 +211,45 @@ void main()
         MoveUp(currentPiece);
         UpdateCave(cave, currentPiece);
 
-        sky = GetCaveTop(cave);
+        top = GetCaveTop(cave);
         pieceIndex++;
+
+        if (top > 40)
+        {
+          // check after each piece if we have a repetition
+          // save current piece index, curent instruction, current top 40 rows
+          caveView caveview;
+          caveview.currentTop       = top;
+          caveview.droppedPieces    = droppedPieces;
+          caveview.instructionIndex = instructionIndex;
+          caveview.pieceIndex       = pieceIndex % 5;
+          caveview.view             = GetLastState(cave);
+
+          auto pos = find(states.begin(), states.end(), caveview);
+          if (pos != states.end() && droppedPieces > 2022)
+          {
+            // we have a repetition
+
+            auto oldDroppedPiece = pos->droppedPieces;
+            auto oldTop          = pos->currentTop;
+
+            auto distTop          = top - oldTop;
+            auto distDroppedPiece = droppedPieces - oldDroppedPiece;
+
+            auto iterations = (maxPiece - droppedPieces) / distDroppedPiece;
+            auto added      = iterations * distTop;
+
+            auto ddroppedPieces = droppedPieces + (iterations * distDroppedPiece);
+
+            auto topnow = top + added;
+            cout << topnow << "\n";
+            if (ddroppedPieces >= maxPiece)
+              return;
+          }
+          else
+            states.push_back(caveview);
+        }
+
         break;
       }
     }
@@ -165,8 +258,9 @@ void main()
 
     if (droppedPieces == 2022)
     {
-      cout << sky << "\n";
-      return;
+      cout << top << "\n";
     }
   }
+
+  cout << top << "\n";
 }
