@@ -241,10 +241,10 @@ void main()
 
             auto ddroppedPieces = droppedPieces + (iterations * distDroppedPiece);
 
-            auto topnow = top + added;
-            cout << topnow << "\n";
             if (ddroppedPieces >= maxPiece)
               return;
+
+            cout << top + added << "\n";
           }
           else
             states.push_back(caveview);
@@ -261,6 +261,4 @@ void main()
       cout << top << "\n";
     }
   }
-
-  cout << top << "\n";
 }
