@@ -1,8 +1,8 @@
 #include "../lib.h"
 
 using namespace std;
-typedef unsigned long long ll;
-ll CalculateVal(map<string, tuple<char, string, string, ll>> & nodes, string currentNode)
+long long CalculateVal(map<string, tuple<char, string, string, long long>> & nodes,
+                       string                                                currentNode)
 {
   auto & [opSign, leftOp, rightOp, value] = nodes[currentNode];
   if (opSign == '+')
@@ -14,20 +14,20 @@ ll CalculateVal(map<string, tuple<char, string, string, ll>> & nodes, string cur
   else if (opSign == '/')
     value = CalculateVal(nodes, leftOp) / CalculateVal(nodes, rightOp);
 
-  cout << currentNode << " = " << leftOp << " " << opSign << " " << rightOp << " value = " << value
-       << "\n";
+  // cout << currentNode <<" = " << leftOp <<" "<< opSign << " " << rightOp << " value = " << value
+  // << "\n";
   return value;
 }
 void main()
 {
-  ifstream                                     fin("data.txt");
-  string                                       line;
-  map<string, tuple<char, string, string, ll>> nodes;
+  ifstream                                            fin("data.txt");
+  string                                              line;
+  map<string, tuple<char, string, string, long long>> nodes;
   while (!fin.eof())
   {
-    string label, left, right;
-    char   opSign = '@';
-    ll     value  = 0;
+    string    label, left, right;
+    char      opSign = '@';
+    long long value  = 0;
     getline(fin, line);
     label = line.substr(0, line.find(':'));
     // if there is number
@@ -55,5 +55,34 @@ void main()
     }
     nodes.insert(make_pair(label, make_tuple(opSign, left, right, value)));
   }
-  cout << CalculateVal(nodes, "root");
+  // p1
+  // cout << CalculateVal(nodes, "root");
+
+  auto [opSign, leftOp, rightOp, value] = nodes["root"];
+  auto      rightVal                    = CalculateVal(nodes, rightOp);
+  long long firstElem                   = 0;
+  long long lastElem                    = LLONG_MAX;
+  while (1)
+  {
+    map<string, tuple<char, string, string, long long>> nodesIntermed = nodes;
+    auto & [opSignHum, leftOpHum, rightOpHum, humnVal]                = nodesIntermed["humn"];
+    // get random val for humn
+    long long mid = firstElem + (lastElem - firstElem) / 2;
+    humnVal       = mid;
+    auto leftVal  = CalculateVal(nodesIntermed, leftOp);
+    // cout << leftVal <<" "<< rightVal << " " << humnVal << "\n";
+    if (leftVal == rightVal)
+    {
+      cout << humnVal;
+      break;
+    }
+    else if (leftVal > rightVal)
+    {
+      firstElem = mid;
+    }
+    else if (leftVal < rightVal)
+    {
+      lastElem = mid - 1;
+    }
+  }
 }
