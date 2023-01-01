@@ -1,6 +1,5 @@
 #include "../lib.h"
 
-using namespace std;
 long long CalculateVal(map<string, tuple<char, string, string, long long>> & nodes,
                        string                                                currentNode)
 {
@@ -14,11 +13,10 @@ long long CalculateVal(map<string, tuple<char, string, string, long long>> & nod
   else if (opSign == '/')
     value = CalculateVal(nodes, leftOp) / CalculateVal(nodes, rightOp);
 
-  // cout << currentNode <<" = " << leftOp <<" "<< opSign << " " << rightOp << " value = " << value
-  // << "\n";
   return value;
 }
-void main()
+
+void day21()
 {
   ifstream                                            fin("data.txt");
   string                                              line;

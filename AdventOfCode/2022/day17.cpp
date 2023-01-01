@@ -165,7 +165,7 @@ struct caveView
   }
 };
 
-void main()
+void day17()
 {
   ifstream fin("data.txt");
   string   instructions;
